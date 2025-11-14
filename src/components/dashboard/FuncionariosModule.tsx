@@ -15,6 +15,7 @@ import { Badge } from "@/components/ui/badge";
 
 export function FuncionariosModule() {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedFuncionario, setSelectedFuncionario] = useState<any>(null);
   
   // Mock data
   const funcionarios = [
@@ -69,7 +70,24 @@ export function FuncionariosModule() {
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="sm">Editar</Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => {
+                        setSelectedFuncionario({
+                          id: func.id,
+                          nome: func.nome,
+                          email: `${func.nome.toLowerCase().replace(" ", ".")}@exemplo.com`,
+                          telefone: func.contato,
+                          tipo: func.tipo,
+                          comissao: func.comissao.replace("%", ""),
+                          dataContratacao: "2024-01-15"
+                        });
+                        setDialogOpen(true);
+                      }}
+                    >
+                      Editar
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -78,7 +96,14 @@ export function FuncionariosModule() {
         </CardContent>
       </Card>
 
-      <FuncionarioDialog open={dialogOpen} onOpenChange={setDialogOpen} />
+      <FuncionarioDialog 
+        open={dialogOpen} 
+        onOpenChange={(open) => {
+          setDialogOpen(open);
+          if (!open) setSelectedFuncionario(null);
+        }}
+        funcionario={selectedFuncionario}
+      />
     </div>
   );
 }

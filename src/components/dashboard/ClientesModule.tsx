@@ -16,6 +16,7 @@ import {
 export function ClientesModule() {
   const [searchTerm, setSearchTerm] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedCliente, setSelectedCliente] = useState<any>(null);
 
   // Mock data - substituir por dados reais do banco
   const clientes = [
@@ -69,7 +70,16 @@ export function ClientesModule() {
                   <TableCell>{cliente.email}</TableCell>
                   <TableCell>{cliente.ultimaVisita}</TableCell>
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="sm">Ver Perfil</Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => {
+                        setSelectedCliente(cliente);
+                        setDialogOpen(true);
+                      }}
+                    >
+                      Editar
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -78,7 +88,14 @@ export function ClientesModule() {
         </CardContent>
       </Card>
 
-      <ClienteDialog open={dialogOpen} onOpenChange={setDialogOpen} />
+      <ClienteDialog 
+        open={dialogOpen} 
+        onOpenChange={(open) => {
+          setDialogOpen(open);
+          if (!open) setSelectedCliente(null);
+        }}
+        cliente={selectedCliente}
+      />
     </div>
   );
 }
