@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus, Search } from "lucide-react";
+import { ClienteDialog } from "./dialogs/ClienteDialog";
 import {
   Table,
   TableBody,
@@ -14,6 +15,7 @@ import {
 
 export function ClientesModule() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   // Mock data - substituir por dados reais do banco
   const clientes = [
@@ -28,7 +30,7 @@ export function ClientesModule() {
           <h2 className="text-3xl font-bold tracking-tight">Gestão de Clientes</h2>
           <p className="text-muted-foreground">Visualize e gerencie todos os seus clientes</p>
         </div>
-        <Button>
+        <Button onClick={() => setDialogOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
           Novo Cliente
         </Button>
@@ -75,6 +77,8 @@ export function ClientesModule() {
           </Table>
         </CardContent>
       </Card>
+
+      <ClienteDialog open={dialogOpen} onOpenChange={setDialogOpen} />
     </div>
   );
 }

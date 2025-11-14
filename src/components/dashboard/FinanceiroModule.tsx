@@ -1,7 +1,11 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { TrendingUp, TrendingDown, DollarSign, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { TrendingUp, TrendingDown, DollarSign, Users, Plus } from "lucide-react";
+import { DespesaDialog } from "./dialogs/DespesaDialog";
 
 export function FinanceiroModule() {
+  const [dialogOpen, setDialogOpen] = useState(false);
   const kpis = [
     { title: "Receita Total", value: "R$ 45.231", change: "+23.1%", trending: "up" },
     { title: "Custo Total", value: "R$ 18.500", change: "-5.2%", trending: "down" },
@@ -11,9 +15,15 @@ export function FinanceiroModule() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-3xl font-bold tracking-tight">Controle Financeiro</h2>
-        <p className="text-muted-foreground">Acompanhe receitas, despesas e comissões</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-3xl font-bold tracking-tight">Controle Financeiro</h2>
+          <p className="text-muted-foreground">Acompanhe receitas, despesas e comissões</p>
+        </div>
+        <Button onClick={() => setDialogOpen(true)}>
+          <Plus className="mr-2 h-4 w-4" />
+          Novo Lançamento
+        </Button>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -96,6 +106,8 @@ export function FinanceiroModule() {
           </CardContent>
         </Card>
       </div>
+
+      <DespesaDialog open={dialogOpen} onOpenChange={setDialogOpen} />
     </div>
   );
 }
