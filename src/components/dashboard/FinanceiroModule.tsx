@@ -6,6 +6,7 @@ import { DespesaDialog } from "./dialogs/DespesaDialog";
 
 export function FinanceiroModule() {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedDespesa, setSelectedDespesa] = useState<any>(null);
   const kpis = [
     { title: "Receita Total", value: "R$ 45.231", change: "+23.1%", trending: "up" },
     { title: "Custo Total", value: "R$ 18.500", change: "-5.2%", trending: "down" },
@@ -107,7 +108,14 @@ export function FinanceiroModule() {
         </Card>
       </div>
 
-      <DespesaDialog open={dialogOpen} onOpenChange={setDialogOpen} />
+      <DespesaDialog 
+        open={dialogOpen} 
+        onOpenChange={(open) => {
+          setDialogOpen(open);
+          if (!open) setSelectedDespesa(null);
+        }}
+        despesa={selectedDespesa}
+      />
     </div>
   );
 }

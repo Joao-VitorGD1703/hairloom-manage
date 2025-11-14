@@ -7,6 +7,7 @@ import { PlanoDialog } from "./dialogs/PlanoDialog";
 
 export function PlanosModule() {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedPlano, setSelectedPlano] = useState<any>(null);
   const planos = [
     {
       id: 1,
@@ -62,7 +63,24 @@ export function PlanosModule() {
                 </ul>
               </div>
               <div className="flex gap-2 pt-4">
-                <Button variant="outline" size="sm" className="flex-1">Editar</Button>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="flex-1"
+                  onClick={() => {
+                    setSelectedPlano({
+                      id: plano.id,
+                      nome: plano.nome,
+                      preco: plano.preco.replace("R$ ", "").replace(",", "."),
+                      validade: plano.validade,
+                      servicos: plano.servicos.map(s => ({ nome: s })),
+                      regras: ""
+                    });
+                    setDialogOpen(true);
+                  }}
+                >
+                  Editar
+                </Button>
                 <Button variant="ghost" size="sm" className="flex-1">Ver Detalhes</Button>
               </div>
             </CardContent>
@@ -80,7 +98,14 @@ export function PlanosModule() {
         </Card>
       </div>
 
-      <PlanoDialog open={dialogOpen} onOpenChange={setDialogOpen} />
+      <PlanoDialog 
+        open={dialogOpen} 
+        onOpenChange={(open) => {
+          setDialogOpen(open);
+          if (!open) setSelectedPlano(null);
+        }}
+        plano={selectedPlano}
+      />
     </div>
   );
 }
