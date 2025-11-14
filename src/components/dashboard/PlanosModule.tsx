@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { PlanoDialog } from "./dialogs/PlanoDialog";
 
 export function PlanosModule() {
+  const [dialogOpen, setDialogOpen] = useState(false);
   const planos = [
     {
       id: 1,
@@ -30,7 +33,7 @@ export function PlanosModule() {
           <h2 className="text-3xl font-bold tracking-tight">Planos e Assinaturas</h2>
           <p className="text-muted-foreground">Configure e gerencie planos recorrentes</p>
         </div>
-        <Button>
+        <Button onClick={() => setDialogOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
           Novo Plano
         </Button>
@@ -66,13 +69,18 @@ export function PlanosModule() {
           </Card>
         ))}
 
-        <Card className="border-dashed hover:border-primary/50 transition-colors cursor-pointer flex items-center justify-center min-h-[300px]">
+        <Card 
+          className="border-dashed hover:border-primary/50 transition-colors cursor-pointer flex items-center justify-center min-h-[300px]"
+          onClick={() => setDialogOpen(true)}
+        >
           <div className="text-center p-6">
             <Plus className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
             <p className="text-muted-foreground">Criar novo plano</p>
           </div>
         </Card>
       </div>
+
+      <PlanoDialog open={dialogOpen} onOpenChange={setDialogOpen} />
     </div>
   );
 }

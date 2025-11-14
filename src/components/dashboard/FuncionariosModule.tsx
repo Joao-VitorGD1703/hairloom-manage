@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { FuncionarioDialog } from "./dialogs/FuncionarioDialog";
 import {
   Table,
   TableBody,
@@ -12,6 +14,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 export function FuncionariosModule() {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  
   // Mock data
   const funcionarios = [
     { id: 1, nome: "Carlos Silva", tipo: "Barbeiro", comissao: "40%", contato: "(11) 98765-4321", status: "Ativo" },
@@ -26,7 +30,7 @@ export function FuncionariosModule() {
           <h2 className="text-3xl font-bold tracking-tight">Gestão de Funcionários</h2>
           <p className="text-muted-foreground">Gerencie barbeiros e administradores</p>
         </div>
-        <Button>
+        <Button onClick={() => setDialogOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
           Novo Funcionário
         </Button>
@@ -73,6 +77,8 @@ export function FuncionariosModule() {
           </Table>
         </CardContent>
       </Card>
+
+      <FuncionarioDialog open={dialogOpen} onOpenChange={setDialogOpen} />
     </div>
   );
 }
