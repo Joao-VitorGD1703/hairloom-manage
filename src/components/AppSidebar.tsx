@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/sidebar";
 
 const menuItems = [
-  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
+  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard, end: true },
   { title: "Clientes", url: "/dashboard/clientes", icon: Users },
   { title: "Agenda", url: "/dashboard/agenda", icon: Calendar },
   { title: "Funcionários", url: "/dashboard/funcionarios", icon: UserCog },
@@ -61,16 +61,15 @@ export function AppSidebar() {
             <SidebarMenu>
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <NavLink 
-                      to={item.url} 
-                      className="flex items-center gap-3 transition-smooth"
-                      activeClassName="!bg-gold !text-black font-medium"
-                    >
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
-                    </NavLink>
-                  </SidebarMenuButton>
+                  <NavLink 
+                    to={item.url}
+                    end={item.end}
+                    className="flex items-center gap-3 px-2 py-2 rounded-md text-sidebar-foreground hover:bg-sidebar-accent transition-smooth"
+                    activeClassName="!bg-gold !text-black font-medium hover:!bg-gold"
+                  >
+                    <item.icon className="h-4 w-4" />
+                    <span>{item.title}</span>
+                  </NavLink>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
